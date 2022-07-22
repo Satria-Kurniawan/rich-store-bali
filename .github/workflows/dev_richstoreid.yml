@@ -10,10 +10,7 @@ on:
   workflow_dispatch:
 
 laravel-tests:
-
-
   runs-on: ubuntu-latest
-
 
   steps:
     - uses: actions/checkout@v2
@@ -37,7 +34,6 @@ laravel-tests:
 
 build:
   runs-on: ubuntu-latest
-
   steps:
 
     - name: Checkout
