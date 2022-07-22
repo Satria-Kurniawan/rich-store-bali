@@ -27,9 +27,9 @@ jobs:
         with:
           files: 'composer.json'
 
-      - name: Run composer self-update --1 if composer.json exists
+      - name: Run composer update if composer.json exists
         if: steps.check_files.outputs.files_exists == 'true'
-        run: composer validate --no-check-publish && composer self-update --1
+        run: composer validate --no-check-publish && composer update
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
