@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Transaction;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
@@ -33,6 +35,20 @@ class TransactionController extends Controller
     public function getTransactions()
     {
         $transaction = Transaction::with('product', 'user')->get();
+
+        return view('admin.transaction', ['transactions' => $transaction]);
+    }
+
+    public function filterTransactions(Request $request)
+    {
+        $inputDate = $request->input('date');
+
+        if (!$inputDate) {
+            $transaction = Transaction::with('product', 'user')->get();
+            return view('admin.transaction', ['transactions' => $transaction]);
+        }
+
+        $transaction = Transaction::with('product', 'user')->whereDate('created_at', '=', $inputDate)->get();
 
         return view('admin.transaction', ['transactions' => $transaction]);
     }

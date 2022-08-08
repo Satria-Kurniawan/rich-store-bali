@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -49,6 +50,8 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
         $category->delete();
+
+        Product::whereCategoryId($id)->delete();
 
         return redirect()->back();
     }

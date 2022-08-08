@@ -97,4 +97,27 @@ class ProductController extends Controller
 
         return redirect()->back();
     }
+
+    public function getProductsOnWelcomePage()
+    {
+        $products = Product::with('category')->get();
+
+        return view('welcome', ['products' => $products]);
+    }
+
+    public function searchProduct(Request $request)
+    {
+        $query = $request->input('query');
+
+        $products = Product::with('category')->where('name', 'LIKE', '%' . $query . '%')->get();
+
+        return view('admin.products.product-searched', ['products' => $products]);
+    }
+
+    public function getProduct($id)
+    {
+        $product = Product::findOrFail($id);
+
+        return view('admin.products.product-detail', ['product' => $product]);
+    }
 }

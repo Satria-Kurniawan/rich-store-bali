@@ -1,6 +1,6 @@
 @extends('layouts.admin.app')
 
-@section('title', 'Product Add')
+@section('title', 'Product Edit')
 
 @section('content')
     <form action="/admin/product-upd/{{ $product->id }}" method="post" enctype="multipart/form-data"
@@ -79,7 +79,7 @@
         <div>
             <div class="flex items-center justify-between">
                 <button type="submit"
-                    class="bg-green-500 py-1.5 px-3 rounded-md text-white font-semibold uppercase">Submit</button>
+                    class="bg-green-500 py-1.5 px-3 rounded-md text-white font-semibold uppercase">Update</button>
             </div>
         </div>
     </form>

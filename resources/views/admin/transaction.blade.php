@@ -3,6 +3,21 @@
 @section('title', 'Daftar Transaksi')
 
 @section('content')
+    <div class="mt-5 flex justify-end items-center">
+        <form action="{{ route('filterTransactions') }}" method="POST">
+            @csrf
+            <input type="date" name="date" class="rounded-md">
+            <button class="bg-blue-500 py-1.5 px-2 rounded-md text-white font-semibold uppercase hover:brightness-90"
+                type="submit">Filter
+            </button>
+        </form>
+        <form action="{{ route('getTransactions') }}" method="GET">
+            <button class="bg-green-500 py-1.5 px-2 ml-1 rounded-md text-white font-semibold uppercase hover:brightness-90"
+                type="submit">
+                Show All
+            </button>
+        </form>
+    </div>
     <div class="overflow-x-auto relative w-full my-5">
         <table class="w-full table-auto bg-white rounded-xl overflow-hidden border-collapse border">
             <thead>
@@ -31,5 +46,10 @@
                 @endforeach
             </tbody>
         </table>
+        @if ($transactions->isEmpty())
+            <div class="flex justify-center my-5">
+                <h1 class="text-4xl font-semibold">Transaksi tidak ditemukan</h1>
+            </div>
+        @endif
     </div>
 @endsection
