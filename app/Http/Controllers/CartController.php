@@ -72,4 +72,11 @@ class CartController extends Controller
 
         return redirect()->route('getBookkeeping');
     }
+
+    public function clearItems()
+    {
+        Cart::truncate();
+
+        return redirect()->back();
+    }
 }

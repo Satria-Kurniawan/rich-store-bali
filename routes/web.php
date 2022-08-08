@@ -18,15 +18,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth'])->name('dashboard');
 
-Route::middleware(['auth'])->group(function () {
+Route::get('/', [ProductController::class, 'getProductsOnWelcomePage'])->name('welcome');
+Route::post('/search-product', [ProductController::class, 'searchProduct'])->name('searchProduct');
+Route::get('/detail-product/{id}', [ProductController::class, 'getProduct'])->name('getProduct');
+
+Route::middleware(['auth', 'adminOnly'])->group(function () {
     // Categories
     Route::get('/admin/category-list', [CategoryController::class, 'getCategories'])->name('categoryList');
     Route::get('/admin/category-add', function () {
@@ -49,9 +53,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/product-add-to-cart/product-{productId}', [CartController::class, 'addProductToCart'])->name('addProductToCart');
     Route::post('/admin/product-cart/item-reduction-{cartContentId}', [CartController::class, 'itemReduction'])->name('itemReduction');
     Route::post('/admin/product-cart/item-addition-{cartContentId}', [CartController::class, 'itemAddition'])->name('itemAddition');
+    Route::post('/admin/product-cart/items-clear', [CartController::class, 'clearItems'])->name('clearItems');
     // Transaction
     Route::post('/admin/record-transaction', [TransactionController::class, 'generateTransaction'])->name('generateTransaction');
     Route::get('/admin/transaction-list', [TransactionController::class, 'getTransactions'])->name('getTransactions');
+    Route::post('/admin/transaction-list', [TransactionController::class, 'filterTransactions'])->name('filterTransactions');
 });
 
 require __DIR__ . '/auth.php';
